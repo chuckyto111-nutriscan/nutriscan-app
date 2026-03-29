@@ -1,0 +1,186 @@
+html<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriScan — Tu asistente nutricional personal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+    .hero { background: linear-gradient(135deg, #1D9E75 0%, #085041 100%); padding: 60px 24px; text-align: center; }
+    .hero-icon { width: 90px; height: 90px; border-radius: 22px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 48px; }
+    .hero h1 { color: white; font-size: 38px; font-weight: 700; margin-bottom: 10px; }
+    .hero .tagline { color: rgba(255,255,255,0.9); font-size: 17px; line-height: 1.7; max-width: 520px; margin: 0 auto 20px; }
+    .badge { display: inline-block; background: rgba(255,255,255,0.2); color: white; font-size: 13px; padding: 5px 14px; border-radius: 20px; margin-bottom: 18px; }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 48px 0; }
+    .section-title { font-size: 26px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+    .section-sub { font-size: 15px; color: #666; margin-bottom: 28px; line-height: 1.6; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 500px) { .feature-grid { grid-template-columns: 1fr; } }
+    .feature-card { background: white; border-radius: 14px; padding: 18px; border: 1px solid #e8e8e8; }
+    .feature-icon { width: 44px; height: 44px; border-radius: 12px; background: #E1F5EE; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; }
+    .feature-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+    .feature-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    .divider { height: 1px; background: #e8e8e8; }
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: #1D9E75; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+    .step-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+    .step-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    .reasons { display: flex; flex-direction: column; gap: 10px; }
+    .reason-card { border-left: 4px solid #1D9E75; padding: 14px 18px; background: white; border-radius: 0 10px 10px 0; border-top: 1px solid #e8e8e8; border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; }
+    .reason-title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+    .reason-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    .emotional { background: linear-gradient(135deg, #1D9E75 0%, #085041 100%); padding: 60px 24px; text-align: center; }
+    .emotional-inner { max-width: 520px; margin: 0 auto; }
+    .emotional p { color: rgba(255,255,255,0.92); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .emotional .firma { color: white; font-size: 20px; font-weight: 700; margin-top: 24px; }
+    .footer { background: #085041; padding: 20px 24px; text-align: center; }
+    .footer p { color: rgba(255,255,255,0.6); font-size: 12px; }
+    .semaforo-demo { display: flex; gap: 8px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+    .sem { padding: 6px 16px; border-radius: 20px; color: white; font-size: 13px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="badge">Tu asistente nutricional personal</div>
+    <div class="hero-icon">🥗</div>
+    <h1>NutriScan</h1>
+    <p class="tagline">Fotografía tu comida y recibe en segundos un análisis nutricional personalizado según tu perfil de salud. Porque comer bien es vivir mejor.</p>
+    <div class="semaforo-demo">
+      <span class="sem" style="background:#1D9E75;">● Verde — Ideal</span>
+      <span class="sem" style="background:#EF9F27;">● Amarillo — Moderado</span>
+      <span class="sem" style="background:#E65C00;">● Naranja — Exceso</span>
+      <span class="sem" style="background:#E24B4A;">● Rojo — Riesgo</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="section">
+      <p class="section-title">¿Qué hace NutriScan?</p>
+      <p class="section-sub">Una app inteligente que analiza tus alimentos con IA y los cruza con tu perfil de salud para darte recomendaciones precisas y personalizadas.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📷</div>
+          <p class="feature-title">Análisis por foto</p>
+          <p class="feature-desc">Solo toma una foto de tu plato. La IA identifica cada alimento, estima porciones y calcula calorías, proteínas, grasas, hidratos y azúcares.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👤</div>
+          <p class="feature-title">Personalizado para ti</p>
+          <p class="feature-desc">Tu perfil incluye edad, peso, altura, nivel de actividad y condiciones de salud. El análisis siempre considera quién eres tú.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚦</div>
+          <p class="feature-title">Semáforo nutricional</p>
+          <p class="feature-desc">Verde, amarillo, naranja o rojo. De un vistazo sabes si esa comida es ideal, aceptable, excesiva o riesgosa para tu salud.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚠️</div>
+          <p class="feature-title">Alertas para condiciones crónicas</p>
+          <p class="feature-desc">¿Diabetes, hipertensión u obesidad? NutriScan te advierte con claridad cuando un alimento puede afectar tu salud.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <p class="feature-title">Registro diario acumulado</p>
+          <p class="feature-desc">Cada comida se suma a tu registro del día. Siempre sabes cuánto has consumido y cuánto te queda disponible.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✅</div>
+          <p class="feature-title">Validación inteligente</p>
+          <p class="feature-desc">Antes del análisis final confirmas los alimentos detectados. Si algo no es correcto lo corriges tú. Así el resultado siempre es preciso.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <p class="section-title">¿Cómo se usa?</p>
+      <p class="section-sub">Tres pasos simples para conocer lo que comes.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <p class="step-title">Fotografía tu comida</p>
+            <p class="step-desc">Abre la app y toma una foto de tu plato. Puedes agregar información adicional como "el vaso tiene jugo de naranja" para mayor precisión. Mientras más claro sea lo que ves en la foto, mejor será el análisis.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-title">Confirma los alimentos detectados</p>
+            <p class="step-desc">La IA te muestra una lista numerada de lo que detectó en la foto. Si algo no está correcto escribe el número y la corrección. Si todo está bien simplemente confirma y continúa.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-title">Recibe tu análisis personalizado</p>
+            <p class="step-desc">En segundos tienes calorías, proteínas, grasas, hidratos y azúcares con semáforo de color y recomendaciones adaptadas a tu perfil. Si la IA sugiere un cambio puedes modificar tu elección antes de registrar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <p class="step-title">Registra y sigue tu día</p>
+            <p class="step-desc">Confirma el consumo y la comida se suma a tu registro diario. Al final del día tienes un resumen completo de todo lo que consumiste con el consejo de la IA para el día siguiente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <p class="section-title">¿Por qué usar NutriScan?</p>
+      <p class="section-sub">Porque tu salud merece más que suposiciones.</p>
+      <div class="reasons">
+        <div class="reason-card">
+          <p class="reason-title">🩺 Si tienes diabetes</p>
+          <p class="reason-desc">Conoce el contenido exacto de azúcar e hidratos antes de comer. NutriScan te alerta de inmediato cuando un alimento puede afectar tu glucosa y te sugiere alternativas más seguras.</p>
+        </div>
+        <div class="reason-card">
+          <p class="reason-title">❤️ Si tienes hipertensión</p>
+          <p class="reason-desc">Monitorea el sodio de cada comida. Muchos alimentos tienen sodio oculto que puede elevar tu presión sin que lo notes. NutriScan lo detecta por ti.</p>
+        </div>
+        <div class="reason-card">
+          <p class="reason-title">⚖️ Si quieres bajar de peso</p>
+          <p class="reason-desc">Lleva un registro real de lo que comes cada día sin contar calorías manualmente ni usar tablas complicadas. Solo una foto y listo.</p>
+        </div>
+        <div class="reason-card">
+          <p class="reason-title">🌿 Si quieres sentirte mejor</p>
+          <p class="reason-desc">Entender qué comes es el primer paso para comer mejor. NutriScan te educa sin juzgarte y te guía sin presionarte hacia una alimentación más consciente.</p>
+        </div>
+        <div class="reason-card">
+          <p class="reason-title">🏃 Si quieres más energía y vitalidad</p>
+          <p class="reason-desc">Una alimentación equilibrada te da más energía, mejor humor y mayor rendimiento físico. NutriScan te ayuda a encontrar ese equilibrio de forma simple y sostenible.</p>
+        </div>
+        <div class="reason-card">
+          <p class="reason-title">🌾 Si tienes celiaquía o colesterol alto</p>
+          <p class="reason-desc">Tu perfil incluye tu condición y el análisis siempre la considera. Las alertas son específicas para lo que tú necesitas cuidar, no para todos en general.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="emotional">
+    <div class="emotional-inner">
+      <p>Cada vez que te sientas a comer mereces saber si lo que tienes en el plato te está ayudando o perjudicando.</p>
+      <p>No para obsesionarte con la comida, sino para tomar decisiones informadas con tranquilidad y confianza.</p>
+      <p>NutriScan no te dice qué comer. Te acompaña para que tú decidas mejor, cuides tu salud y disfrutes cada comida sin miedo ni incertidumbre.</p>
+      <p>Porque alimentarse bien no es un sacrificio. Es un regalo que te haces a ti mismo cada día. 🌿</p>
+      <p class="firma">Come con conciencia. Vive con salud.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>NutriScan © 2026 — Desarrollado con ❤️ para quienes cuidan su salud</p>
+  </div>
+
+</body>
+</html>
