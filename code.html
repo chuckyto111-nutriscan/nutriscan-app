@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NutriSmart - Tu asistente personal de nutrición con IA</title>
+<link href="https://fonts.googleapis.com/" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        display: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#003629',
+                        'primary-container': '#1b4d3e',
+                        'on-primary': '#ffffff',
+                        secondary: '#52625b',
+                        'tertiary-container': '#ffb77d',
+                        'on-tertiary-container': '#281000',
+                        surface: '#f9f9f8',
+                        'on-surface': '#191c1c',
+                        'surface-container-lowest': '#ffffff',
+                        'surface-container-low': '#f3f4f3',
+                        'surface-container-high': '#e7e9e7',
+                        'surface-container-highest': '#e1e3e1',
+                    },
+                    spacing: {
+                        '4': '1rem',
+                        '8': '2rem',
+                    },
+                    borderRadius: {
+                        'xl': '0.75rem',
+                        '2xl': '1rem',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-nav {
+            background: rgba(249, 249, 248, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .editorial-shadow {
+            box-shadow: 0 8px 24px -4px rgba(0, 54, 41, 0.06);
+        }
+        .ghost-border {
+            border: 1px solid rgba(192, 201, 195, 0.15);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+        }
+
+        /* Estilos del Manual NutriSmart */
+        .manual-hero { background: linear-gradient(135deg, #0d3d2b 0%, #1D9E75 100%); padding: 60px 24px; text-align: center; border-radius: 3.5rem; margin: 24px auto; max-width: 1280px; }
+        .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); color: white; font-size: 13px; padding: 5px 16px; border-radius: 20px; margin-bottom: 16px; }
+        .manual-hero h1 { color: white; font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+        .manual-hero p { color: rgba(255,255,255,0.85); font-size: 16px; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+        .indice { background: white; max-width: 800px; margin: 32px auto; border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .indice h2 { font-size: 18px; font-weight: 700; color: #0d3d2b; margin-bottom: 16px; }
+        .indice-lista { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        @media (max-width: 560px) { .indice-lista { grid-template-columns: 1fr; } }
+        .indice-lista a { display: flex; align-items: center; gap: 8px; color: #1D9E75; text-decoration: none; font-size: 14px; padding: 6px 0; }
+        .indice-lista a:hover { color: #0d3d2b; }
+        .indice-num { width: 24px; height: 24px; background: #E1F5EE; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #0d3d2b; flex-shrink: 0; }
+
+        .manual-container { max-width: 800px; margin: 0 auto; padding: 0 24px 60px; }
+        .seccion-manual { background: white; border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); scroll-margin-top: 100px; }
+        .seccion-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #E1F5EE; }
+        .seccion-num { width: 40px; height: 40px; background: #1D9E75; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; font-weight: 800; flex-shrink: 0; }
+        .seccion-manual h2 { font-size: 22px; font-weight: 700; color: #0d3d2b; }
+        .seccion-manual p { font-size: 15px; color: #444; margin-bottom: 14px; line-height: 1.75; }
+        .seccion-manual p:last-child { margin-bottom: 0; }
+
+        .tip { background: #E1F5EE; border-left: 4px solid #1D9E75; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 16px 0; }
+        .tip p { color: #085041; margin: 0; font-size: 14px; }
+        .tip strong { color: #0d3d2b; }
+
+        .advertencia { background: #FFF8E7; border-left: 4px solid #EF9F27; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 16px 0; }
+        .advertencia p { color: #7A4F00; margin: 0; font-size: 14px; }
+
+        .semaforo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+        @media (max-width: 480px) { .semaforo-grid { grid-template-columns: 1fr; } }
+        .semaforo-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; }
+        .semaforo-verde { background: #E1F5EE; }
+        .semaforo-amarillo { background: #FFF8E7; }
+        .semaforo-naranja { background: #FFF0E6; }
+        .semaforo-rojo { background: #FCEBEB; }
+        .semaforo-circulo { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; }
+        .semaforo-item p { margin: 0 !important; font-size: 13px; font-weight: 500; }
+
+        .paso-lista { list-style: none; counter-reset: pasos; }
+        .paso-lista li { counter-increment: pasos; display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+        .paso-lista li::before { content: counter(pasos); width: 28px; height: 28px; background: #1D9E75; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+        .paso-lista li p { margin: 0; font-size: 15px; color: #444; line-height: 1.6; }
+
+        .objetivo-card { background: linear-gradient(135deg, #0d3d2b, #1D9E75); border-radius: 16px; padding: 28px; color: white; margin-bottom: 24px; scroll-margin-top: 100px; }
+        .objetivo-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+        .objetivo-card p { color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.75; margin-bottom: 10px; }
+        .objetivo-card p:last-child { margin-bottom: 0; }
+
+        .manual-cta { background: linear-gradient(135deg, #0d3d2b, #1D9E75); border-radius: 16px; padding: 40px 28px; text-align: center; margin-bottom: 24px; }
+        .manual-cta h2 { color: white; font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+        .manual-cta p { color: rgba(255,255,255,0.85); font-size: 15px; margin-bottom: 24px; }
+        .cta-btn-manual { display: inline-block; background: #f5a623; color: white; font-size: 16px; font-weight: 700; padding: 14px 32px; border-radius: 30px; text-decoration: none; }
+    </style>
+</head>
+<body class="gradient-bg text-on-surface antialiased">
+<div class="min-h-screen flex flex-col">
+<nav class="fixed top-0 left-0 right-0 z-50 glass-nav ghost-border border-b">
+<div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<svg class="w-5 h-5 text-tertiary-container" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
+<path d="M20 2v4"></path>
+<path d="M22 4h-4"></path>
+<circle cx="4" cy="20" r="2"></circle>
+</svg>
+</div>
+<span class="font-display text-xl font-extrabold text-primary tracking-tighter">NutriSmart</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-secondary hover:text-primary transition-colors" href="#how-it-works">Cómo funciona</a>
+<a class="text-sm font-medium text-secondary hover:text-primary transition-colors" href="#features">Funciones</a>
+<a class="text-sm font-medium text-secondary hover:text-primary transition-colors" href="#benefits">Beneficios</a>
+<a class="text-sm font-bold bg-primary/10 text-primary px-4 py-2 rounded-full hover:bg-primary hover:text-white transition-all" href="#manual-section">Manual NutriSmart</a>
+</div>
+<div class="w-20 md:w-auto"></div>
+</div>
+</nav>
+<main class="flex-grow pt-20">
+<!-- Hero -->
+<section class="relative overflow-hidden py-16 md:py-24">
+<div class="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-full border border-primary/10">
+<div class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Tecnología NutriSmart</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-extrabold text-primary leading-[1.1]">Tu asistente personal <span class="text-secondary">NutriSmart.</span></h1>
+<p class="text-lg text-secondary leading-relaxed max-w-lg">NutriSmart esta diseñada para asistir a personas de preferencia mayores que deseen equilibrar su peso, tengan enfermedades cronicas; un gran aliado que analizara si las comidas son beneficiosas o dañinas.</p>
+<div class="flex flex-col gap-6 pt-4 items-center sm:items-start">
+<a class="inline-flex items-center justify-center gap-2 bg-tertiary-container text-on-tertiary-container px-8 py-4 text-lg font-bold rounded-2xl group w-full sm:w-auto shadow-lg hover:opacity-90 transition-opacity" href="#real-analysis">Analizar con NutriSmart</a>
+<p class="text-[16px] font-bold text-primary leading-tight text-center sm:text-left">NutriSmart te regala 15 Analisis para que lo pruebes Gratis y sin tarjetas.</p>
+<a class="bg-surface-container-highest text-on-surface px-10 py-5 text-[28px] font-bold rounded-2xl hover:bg-surface-container-high transition-colors w-full sm:w-auto text-center" href="#plans">Ver Planes</a>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/5 rounded-[3rem] blur-3xl"></div>
+<div class="relative rounded-[2.5rem] overflow-hidden aspect-square shadow-2xl">
+<img alt="Fresh Salad" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWjEcQG7eU_p8iJbrIYWlvErnpMwLIkQkiRJqbkyt5GBylRijVXQvNJZzzVNHpBiJFTz9SjvVsb4WTGxZ5nUPTqBWZMAxJjtitOvpD4xcF5fJKpCb1MNtQfcHzArDPAPYpaDepYMVOIn6M3u9Eu4eo7Xkdzje_u-NXB7rQ4PhaMfXoetyZX-Zy_DN5FFXZyGWKpeoVZSgdvwEVFtOlXhabAFyYXNvzmVtYANNyWapWpQs615G7EVRax964if6dncX8M7ojS6-ZJRES"/>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works -->
+<section class="py-24 bg-surface-container-low" id="how-it-works">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="text-center space-y-4 mb-20">
+<h2 class="text-4xl md:text-5xl font-extrabold text-primary">Cómo funciona NutriSmart</h2>
+<div class="w-16 h-1 bg-tertiary-container mx-auto rounded-full"></div>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] ghost-border editorial-shadow space-y-6">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+</div>
+<h3 class="text-xl font-bold text-primary">1. Toma la foto</h3>
+<p class="text-sm text-secondary leading-relaxed">Simplemente enfoca tu plato. NutriSmart detecta múltiples ingredientes en una sola captura.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] ghost-border editorial-shadow space-y-6">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+</div>
+<h3 class="text-xl font-bold text-primary">2. Validación IA</h3>
+<p class="text-sm text-secondary leading-relaxed">Nuestro motor identifica cada alimento y estima las porciones con precisión milimétrica.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] ghost-border editorial-shadow space-y-6">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+</div>
+<h3 class="text-xl font-bold text-primary">3. Análisis Nutricional</h3>
+<p class="text-sm text-secondary leading-relaxed">Visualiza calorías, proteínas y grasas al instante con un reporte detallado.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] ghost-border editorial-shadow space-y-6">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+</div>
+<h3 class="text-xl font-bold text-primary">4. Consejos</h3>
+<p class="text-sm text-secondary leading-relaxed">Sugerencias personalizadas para mejorar tu balance diario basadas en tus objetivos.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Real Analysis Section -->
+<section class="py-24 bg-surface" id="real-analysis">
+<div class="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-12 gap-16 items-center">
+<div class="lg:col-span-5 space-y-8">
+<h2 class="text-4xl font-extrabold text-primary leading-tight">Análisis Real con <br/> <span class="text-secondary">NutriSmart</span></h2>
+<p class="text-lg text-secondary leading-relaxed">Transformamos una simple imagen en un panel de datos nutricionales comprensibles. Sin complicaciones, sin registros manuales tediosos.</p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="mt-1"><svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div>
+<div>
+<h4 class="font-bold text-primary">Precisión Certificada</h4>
+<p class="text-sm text-secondary">Basado en bases de datos nutricionales globales.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="mt-1"><svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></div>
+<div>
+<h4 class="font-bold text-primary">Seguimiento Diario</h4>
+<p class="text-sm text-secondary">Historial detallado en tu perfil personal.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 grid md:grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-[2.5rem] editorial-shadow ghost-border space-y-6">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold text-primary/40 uppercase tracking-widest">Almuerzo NutriSmart</span>
+<span class="text-[10px] font-medium text-secondary">Hoy, 14:30</span>
+</div>
+<div class="aspect-video rounded-2xl overflow-hidden ghost-border">
+<img alt="Salmon Dish" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa-hQp4kHlZHRXmZx2k0ym1d3pmIcIIUqurDwU2s-jgBCqZWxJRAWYqQSHAKdvAvwi_P2rxDzbvYrQa5076c2R44hARksZ5c6nI97QxuTyaI-MV_ATEFNumgltflySbWk7xPwD-gap_Lg9PgmLx85IkTyPC2fFknm7_eqSzQzFFKXqmLEf4zE_k4ejLYCaTSII5-h-HWySdUkEvz7ilA_m79RnBaJbj976WxfwpIALHytRd_yJKdazrEX81JpzPMLY2wmcwFtcpkPS"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] font-bold text-secondary uppercase mb-1">Calorías</p>
+<p class="text-2xl font-extrabold text-primary">450 <span class="text-xs font-medium text-secondary">kcal</span></p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-2xl">
+<p class="text-[10px] font-bold text-secondary uppercase mb-1">Proteínas</p>
+<p class="text-2xl font-extrabold text-primary">32 <span class="text-xs font-medium text-secondary">g</span></p>
+</div>
+</div>
+</div>
+<div class="bg-primary p-8 rounded-[2.5rem] editorial-shadow text-on-primary space-y-8">
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] opacity-60">Resumen Diario</h4>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-xs"><span class="opacity-80">Carbohidratos</span><span class="font-bold">45g / 150g</span></div>
+<div class="h-2 w-full bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-tertiary-container rounded-full" style="width: 30%;"></div></div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs"><span class="opacity-80">Grasas</span><span class="font-bold">12g / 65g</span></div>
+<div class="h-2 w-full bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-tertiary-container rounded-full" style="width: 18%;"></div></div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs"><span class="opacity-80">Sodio</span><span class="font-bold">200mg / 2.3g</span></div>
+<div class="h-2 w-full bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-tertiary-container rounded-full" style="width: 8.6%;"></div></div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/10">
+<p class="text-xs italic opacity-70 text-center">"Tu nivel de sodio está bajo control hoy."</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features -->
+<section class="py-24 bg-surface-container-low" id="features">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<h2 class="text-4xl font-extrabold text-primary mb-16">Funciones de NutriSmart</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container-lowest rounded-[2.5rem] ghost-border editorial-shadow overflow-hidden grid md:grid-cols-2">
+<div class="p-10 flex flex-col justify-center space-y-6">
+<div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center text-red-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+</div>
+<h3 class="text-2xl font-bold text-primary">Alertas NutriSmart</h3>
+<p class="text-secondary leading-relaxed">Configura perfiles específicos para Diabetes o Hipertensión y recibe alertas inmediatas si un plato no es recomendado para ti.</p>
+</div>
+<div class="relative h-64 md:h-auto bg-surface-container-high">
+<img alt="Health Monitoring" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy86hPCeGwSkuSQTL7T-23JAn2q98v3trR2OPtpQ-oS2QL5vui0V8ShQJaTjqdrSMBlJBSAnXUK0-yagPmtIPqzsUYAuiH0ukx0WXd19p4XhD_MZrOKDEtcCQhQv52sHJVcN_chxSMDPrjE8_v9A4VlfoQF62KjguqaseBqxaY9pojNRb-j6zPs0o_2lHxC9f3kVGXZsqriY5tpmtJzV0f-x_vlmlpjCc3Yb3rBesfDJe8oqfwhDf5gVogGykD_L8Cltoy8xKoSFMw"/>
+</div>
+</div>
+<div class="bg-primary p-10 rounded-[2.5rem] editorial-shadow text-on-primary flex flex-col justify-between">
+<svg class="w-10 h-10 text-tertiary-container" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"></path><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"></path></svg>
+<div class="space-y-4">
+<h3 class="text-2xl font-bold">Estilo NutriSmart</h3>
+<p class="text-sm opacity-70">Conecta tu ingesta con el ejercicio necesario para mantener un balance energético perfecto.</p>
+</div>
+</div>
+<div class="bg-tertiary-container p-10 rounded-[2.5rem] editorial-shadow text-on-tertiary-container flex flex-col justify-between">
+<svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+<div class="space-y-4">
+<h3 class="text-2xl font-bold">Escaneo Rápido</h3>
+<p class="text-sm opacity-80">Identificación precisa de más de 10,000 tipos de alimentos con solo un clic.</p>
+</div>
+</div>
+<div class="md:col-span-2 bg-surface-container-lowest p-10 rounded-[2.5rem] ghost-border editorial-shadow flex flex-col md:flex-row gap-10 items-center">
+<div class="md:w-1/2 space-y-4">
+<svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg>
+<h3 class="text-2xl font-bold text-primary">Métricas Avanzadas</h3>
+<p class="text-secondary">Desde micronutrientes hasta hidratación. Todo lo que necesitas saber sobre tu nutrición en un solo lugar.</p>
+</div>
+<div class="md:w-1/2 flex justify-center w-full">
+<div class="w-full max-w-xs p-6 bg-surface-container-low rounded-2xl text-center">
+<p class="text-[12px] font-bold text-secondary uppercase mb-2">Proteínas</p>
+<p class="text-4xl font-extrabold text-primary">85%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits -->
+<section class="py-24 bg-surface" id="benefits">
+<div class="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-24 items-center">
+<div class="relative rounded-[3rem] overflow-hidden aspect-[4/5] editorial-shadow ghost-border">
+<img alt="Healthy Lifestyle" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZZjrecGNfzpz8G8OnXYGeltFHjvSGLvJ9EvEYejUr6z9YUWhfeh4QHqP8AFlj-90DvFebWpbO9HBRsqyikz08HBCS8YWYt5V23_U-dr0vnYrxwv4d7cquqnDi001jrPtHhZcp5UerWVLUsVc3h2qHdss0GOTnIejK4NerDMHP4SaDZMX16rjzIvyJWoDLjOLVx95-y1GThIZkpOODWKsJSnLAQ-6-Fdnjtd0Iykmgcf8NoJkg80CKg6lCGrMBxA1hekJYn29YsJA2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
+<div class="absolute bottom-10 left-10 right-10">
+<p class="text-2xl font-bold text-white leading-tight">"NutriSmart cambió mi forma de entender la comida."</p>
+<p class="text-sm text-white/70 mt-2">— Elena, usuaria desde 2023</p>
+</div>
+</div>
+<div class="space-y-12">
+<h2 class="text-4xl font-extrabold text-primary">Beneficios NutriSmart</h2>
+<div class="space-y-10">
+<div class="flex gap-6">
+<div class="shrink-0 w-14 h-14 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</div>
+<div class="space-y-2">
+<h4 class="text-xl font-bold text-primary">Salud Cardiovascular</h4>
+<p class="text-secondary leading-relaxed">Herramientas especializadas para el manejo de condiciones crónicas y prevención.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="shrink-0 w-14 h-14 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 3v18"></path><path d="M19 7l2 4h-4l2-4z"></path><path d="M5 7l2 4h-4l2-4z"></path><path d="M2 17h20"></path><path d="M7 21h10"></path></svg>
+</div>
+<div class="space-y-2">
+<h4 class="text-xl font-bold text-primary">Control de Peso</h4>
+<p class="text-secondary leading-relaxed">Pérdida de peso sostenible mediante el monitoreo inteligente y no restrictivo.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="shrink-0 w-14 h-14 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+</div>
+<div class="space-y-2">
+<h4 class="text-xl font-bold text-primary">Energía y Vitalidad</h4>
+<p class="text-secondary leading-relaxed">Aprende qué alimentos te proporcionan energía duradera para tu día a día.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="shrink-0 w-14 h-14 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+</div>
+<div class="space-y-2">
+<h4 class="text-xl font-bold text-primary">Consejos prácticos y saludables</h4>
+<p class="text-secondary leading-relaxed">NutriSmart te dará consejos para quemar las calorías extras, equilibrar el sodio y mucho más.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Table -->
+<section class="py-24 bg-surface-container-low" id="plans">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="text-center space-y-4 mb-16">
+<h2 class="text-4xl md:text-5xl font-extrabold text-primary">💎 Elige tu Plan de Análisis NutriSmart</h2>
+<p class="text-secondary">Invierte en tu salud con el plan que mejor se adapte a tus necesidades.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 mb-16">
+<div class="p-10 rounded-[3rem] editorial-shadow ghost-border flex flex-col items-center text-center space-y-6 bg-surface-container-lowest text-primary">
+<h3 class="text-2xl font-bold uppercase tracking-widest opacity-80">Básico</h3>
+<div class="space-y-1">
+<p class="text-4xl font-extrabold">$3 USD</p>
+<p class="text-3xl font-bold text-primary/60">$3.000 CLP</p>
+<p class="text-lg font-bold pt-2 text-secondary">50 Análisis</p>
+</div>
+<p class="italic text-sm opacity-70">"Porque tu salud no puede esperar"</p>
+<button class="bg-primary text-on-primary px-6 py-3 font-bold rounded-xl w-full mt-4 hover:bg-primary-container transition-colors">Elegir Plan</button>
+</div>
+<div class="p-10 rounded-[3rem] editorial-shadow ghost-border flex flex-col items-center text-center space-y-6 bg-primary text-on-primary scale-105 z-10">
+<h3 class="text-2xl font-bold uppercase tracking-widest opacity-80">Estándar</h3>
+<div class="space-y-1">
+<p class="text-4xl font-extrabold">$5 USD</p>
+<p class="text-3xl font-bold text-tertiary-container/80">$5.000 CLP</p>
+<p class="text-lg font-bold pt-2 text-tertiary-container">120 Análisis</p>
+</div>
+<p class="italic text-sm opacity-70">"La tranquilidad de estar con NutriSmart"</p>
+<button class="bg-tertiary-container text-on-tertiary-container px-6 py-3 font-bold rounded-xl w-full mt-4 hover:opacity-90 transition-opacity">Elegir Plan</button>
+</div>
+<div class="p-10 rounded-[3rem] editorial-shadow ghost-border flex flex-col items-center text-center space-y-6 bg-surface-container-lowest text-primary">
+<h3 class="text-2xl font-bold uppercase tracking-widest opacity-80">Premium</h3>
+<div class="space-y-1">
+<p class="text-4xl font-extrabold">$12 USD</p>
+<p class="text-3xl font-bold text-primary/60">$12.000 CLP</p>
+<p class="text-lg font-bold pt-2 text-secondary">350 Análisis</p>
+</div>
+<p class="italic text-sm opacity-70">"Salud y nutrición sana sin barreras"</p>
+<button class="bg-primary text-on-primary px-6 py-3 font-bold rounded-xl w-full mt-4 hover:bg-primary-container transition-colors">Elegir Plan</button>
+</div>
+</div>
+<div class="bg-tertiary-container/20 p-8 rounded-[2.5rem] ghost-border text-center">
+<p class="text-primary font-bold text-lg">🎁 PROMOCIÓN DE LEALTAD:</p>
+<p class="text-secondary mt-2">Por cada 3 recargas realizadas (de cualquier monto), ¡te regalamos un Bono de 100 Análisis GRATIS! Premiamos tu compromiso con una vida sana. 🎨</p>
+</div>
+</div>
+</section>
+
+<!-- Manual Section -->
+<section id="manual-section" class="py-12">
+    <div class="manual-hero">
+        <span class="hero-badge">📖 Guía completa</span>
+        <h1>Cómo usar NutriSmart</h1>
+        <p>Aprende paso a paso a sacarle el máximo provecho a tu asistente nutricional personal con inteligencia artificial.</p>
+    </div>
+
+    <div class="indice">
+        <h2>📋 Contenido de este manual</h2>
+        <ul class="indice-lista">
+            <li><a href="#objetivo"><div class="indice-num">🎯</div> Objetivo de NutriSmart</a></li>
+            <li><a href="#registro"><div class="indice-num">1</div> Registro y perfil</a></li>
+            <li><a href="#analisis-manual"><div class="indice-num">2</div> Analizar tu comida</a></li>
+            <li><a href="#validacion"><div class="indice-num">3</div> Validación de alimentos</a></li>
+            <li><a href="#resultado"><div class="indice-num">4</div> Resultado y semáforo</a></li>
+            <li><a href="#balance"><div class="indice-num">5</div> Balance del día</a></li>
+            <li><a href="#ajustes-manual"><div class="indice-num">6</div> Ajustes y perfil</a></li>
+            <li><a href="#ayuda-manual"><div class="indice-num">7</div> Ayuda y contacto</a></li>
+        </ul>
+    </div>
+
+    <div class="manual-container">
+        <div class="objetivo-card" id="objetivo">
+            <h2>🎯 Objetivo de tener y usar NutriSmart</h2>
+            <p>NutriSmart fue creado para asistir de forma personal, en base al perfil físico y de salud del usuario, en el plano nutricional. Te ayuda en el análisis técnico de macronutrientes y composición de distintas comidas que pueden ser sanas y beneficiosas, así como también pesadas o con componentes adversos.</p>
+            <p>Está especialmente diseñado para personas con enfermedades crónicas como <strong>Diabetes, Hipertensión y Obesidad</strong>, para guiarlos hacia una alimentación más sana y con menores riesgos para su salud.</p>
+            <p>Hemos trabajado más de tres meses para entregar esta aplicación de ayuda y educación, para que las personas valoren y aprendan sobre lo ventajoso y saludable que es tener una alimentación alineada a sus necesidades y salud propia.</p>
+        </div>
+
+        <div class="seccion-manual" id="registro">
+            <div class="seccion-header">
+                <div class="seccion-num">1</div>
+                <h2>Registro y configuración del perfil</h2>
+            </div>
+            <p>Al abrir NutriSmart por primera vez, la app te pedirá que ingreses tus datos personales. Esta información es fundamental para que el análisis nutricional sea preciso y personalizado para ti.</p>
+            <ul class="paso-lista">
+                <li><p>Ingresa tu <strong>nombre y apellido</strong>, género, edad, peso y altura.</p></li>
+                <li><p>Selecciona tu <strong>nivel de actividad física</strong>: mínima (oficinista), moderada (operario) o intensa (construcción, deportista).</p></li>
+                <li><p>Indica si tienes alguna <strong>condición de salud</strong> como Diabetes, Hipertensión, Obesidad, Hipoglucemia, Colesterol alto o Celiaquía.</p></li>
+                <li><p>Elige tu <strong>avatar</strong> presionando la figura al lado de tu nombre para personalizar tu perfil.</p></li>
+                <li><p>Presiona <strong>"Guardar perfil y continuar"</strong> — todos los campos obligatorios deben estar completos.</p></li>
+            </ul>
+            <div class="tip">
+                <p>💡 <strong>Importante:</strong> Mantén actualizados tu peso y edad en ajustes para que los análisis futuros sean más precisos. Si cumpliste años o bajaste de peso, actualiza tus datos.</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="analisis-manual">
+            <div class="seccion-header">
+                <div class="seccion-num">2</div>
+                <h2>Analizar tu comida</h2>
+            </div>
+            <p>Esta es la función principal de NutriSmart. Simplemente fotografía lo que vas a comer y la inteligencia artificial hará el análisis.</p>
+            <ul class="paso-lista">
+                <li><p>Presiona el botón naranja <strong>"Analizar mis alimentos"</strong> en la pantalla de inicio.</p></li>
+                <li><p>Toma una foto directamente con la cámara o selecciona una imagen de tu galería.</p></li>
+                <li><p>Si tu plato es típico chileno, ayuda a NutriSmart escribiendo en el campo opcional: <em>"cazuela", "pastel de choclo", "empanada de pino"</em>, etc.</p></li>
+                <li><p>Si tienes un vaso con bebida, especifica su contenido. Un vaso de Coca-Cola puede confundirse con vino o Coca-Cola Zero, y son muy distintos nutricionalmente.</p></li>
+                <li><p>Presiona <strong>"Identificar alimentos"</strong> para que NutriSmart analice tu plato.</p></li>
+            </ul>
+            <div class="advertencia">
+                <p>⚠️ <strong>Consejo:</strong> Fotografía toda tu mesa donde estén el plato, vaso y acompañamientos para un análisis más completo y preciso.</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="validacion">
+            <div class="seccion-header">
+                <div class="seccion-num">3</div>
+                <h2>Validación de alimentos detectados</h2>
+            </div>
+            <p>Después del análisis llegarás a la pantalla de validación. Aquí verás una lista numerada de todos los ingredientes y alimentos que NutriSmart detectó en tu foto.</p>
+            <ul class="paso-lista">
+                <li><p>Revisa que la lista sea correcta según tu plato real.</p></li>
+                <li><p>Si un alimento no es correcto, presiona el <strong>ícono de lápiz ✏️</strong> al lado derecho y escribe el nombre real.</p></li>
+                <li><p>Si hay algo que no consumirás, <strong>desmarca el checkbox</strong> verde al lado izquierdo para eliminarlo del análisis.</p></li>
+                <li><p>Cuando todo esté correcto, presiona <strong>"Ver Análisis"</strong> para obtener el resultado final.</p></li>
+            </ul>
+            <div class="tip">
+                <p>💡 Este paso es clave para obtener el <strong>95% de exactitud</strong> en el análisis. Tómate un momento para verificar los alimentos detectados.</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="resultado">
+            <div class="seccion-header">
+                <div class="seccion-num">4</div>
+                <h2>Resultado, semáforo y consejos</h2>
+            </div>
+            <p>NutriSmart te entregará un análisis completo con semáforo de color y recomendaciones personalizadas según tu perfil de salud.</p>
+            <p><strong>El semáforo de color indica:</strong></p>
+            <div class="semaforo-grid">
+                <div class="semaforo-item semaforo-verde">
+                    <div class="semaforo-circulo" style="background:#1D9E75;"></div>
+                    <p>Verde — Comida excelente, ideal para tu perfil</p>
+                </div>
+                <div class="semaforo-item semaforo-amarillo">
+                    <div class="semaforo-circulo" style="background:#EF9F27;"></div>
+                    <p>Amarillo — Aceptable, algún nutriente levemente alto</p>
+                </div>
+                <div class="semaforo-item semaforo-naranja">
+                    <div class="semaforo-circulo" style="background:#E65C00;"></div>
+                    <p>Naranja — Exceso notable, reduce porción o frecuencia</p>
+                </div>
+                <div class="semaforo-item semaforo-rojo">
+                    <div class="semaforo-circulo" style="background:#E24B4A;"></div>
+                    <p>Rojo — Riesgo directo para tu condición de salud</p>
+                </div>
+            </div>
+            <p>Al finalizar el análisis presiona <strong>"Sí, los consumiré"</strong> para registrar la comida en tu diario nutricional del día, o <strong>"No"</strong> si decides cambiar algo antes de comer.</p>
+            <div class="tip">
+                <p>💡 Es importante registrar todas tus comidas para que el <strong>balance del día</strong> sea preciso y útil.</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="balance">
+            <div class="seccion-header">
+                <div class="seccion-num">5</div>
+                <h2>Balance del día anterior</h2>
+            </div>
+            <p>Presiona el ícono <strong>📊 Balance</strong> en el menú inferior para ver cómo estuvo tu nutrición ayer comparada con tu gasto energético real.</p>
+            <p>NutriSmart calcula tu gasto usando la fórmula MET (Equivalente Metabólico de Tarea) según tu nivel de actividad física, y lo compara con lo que consumiste.</p>
+            <ul class="paso-lista">
+                <li><p>Si la insignia es <strong>verde</strong> — tus comidas fueron adecuadas y saludables para tu perfil.</p></li>
+                <li><p>Si es <strong>amarilla</strong> — estuviste muy cerca de tus metas, solo por poco te excediste.</p></li>
+                <li><p>Si es <strong>naranja o roja</strong> — tus comidas superaron ampliamente tus necesidades diarias. Cuida mejor tu nutrición.</p></li>
+            </ul>
+            <div class="advertencia">
+                <p>⚠️ El balance solo es preciso si registraste todas tus comidas del día anterior. ¡No olvides presionar "Sí, los consumiré" al finalizar cada análisis!</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="ajustes-manual">
+            <div class="seccion-header">
+                <div class="seccion-num">6</div>
+                <h2>Ajustes y personalización</h2>
+            </div>
+            <p>En la sección de ajustes puedes personalizar tu experiencia en NutriSmart:</p>
+            <ul class="paso-lista">
+                <li><p><strong>Modo día / Modo noche</strong> — Elige el esquema de colores que más te acomode según la luz del ambiente.</p></li>
+                <li><p><strong>Editar perfil</strong> — Cambia tu avatar, actualiza tu peso si has bajado o subido, y actualiza tu edad si cumpliste años.</p></li>
+                <li><p><strong>Condiciones de salud</strong> — Puedes agregar una nueva condición si es necesario. Mantener esta información actualizada mejora la precisión de las alertas.</p></li>
+            </ul>
+            <div class="tip">
+                <p>💡 Actualizar tu peso periódicamente es muy importante. NutriSmart calcula tu meta calórica y tus metas de nutrientes basándose en tu peso actual.</p>
+            </div>
+        </div>
+
+        <div class="seccion-manual" id="ayuda-manual">
+            <div class="seccion-header">
+                <div class="seccion-num">7</div>
+                <h2>Ayuda, recargas y contacto</h2>
+            </div>
+            <p>Presiona el ícono <strong>❓ Ayuda</strong> en el menú inferior para acceder a:</p>
+            <ul class="paso-lista">
+                <li><p><strong>Características y forma de uso</strong> — Escanea el código QR o presiona el botón para visitar nuestra página web con toda la información sobre NutriSmart.</p></li>
+                <li><p><strong>Cómo recargar análisis</strong> — Cuando se acaben tus análisis gratuitos, puedes recargar desde Google Play Store con planes desde $3 USD.</p></li>
+                <li><p><strong>Contactar desarrolladores</strong> — Envíanos tus sugerencias, reportes de errores u opiniones a nutriscancontacto@gmail.com.</p></li>
+                <li><p><strong>Compartir con un amigo</strong> — Recomienda NutriSmart a quien creas que puede beneficiarse. Una recomendación de alguien de confianza vale más que cualquier anuncio.</p></li>
+            </ul>
+            <div style="background: #f0f0f0; border-radius: 12px; padding: 20px; text-align: center; margin-top: 16px;">
+                <p style="font-size: 14px; color: #555; margin-bottom: 8px;">¿Tienes dudas o sugerencias? Escríbenos:</p>
+                <a href="mailto:nutriscancontacto@gmail.com" style="font-size: 16px; font-weight: 600; color: #1D9E75; text-decoration: none;">📧 nutriscancontacto@gmail.com</a>
+            </div>
+        </div>
+
+        <div class="manual-cta">
+            <h2>¿Listo para comenzar? 🌿</h2>
+            <p>Tus primeros días puede que sean desordenados, pero día tras día te irás acostumbrando. Si tienes enfermedades crónicas, verás cómo poco a poco se van controlando mejor. Es cosa de paciencia y constancia.</p>
+            <a href="#" class="cta-btn-manual">Ir Arriba ↑</a>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 max-w-7xl mx-auto px-6 md:px-12">
+<div class="bg-primary rounded-[3.5rem] p-12 md:p-24 text-center relative overflow-hidden editorial-shadow">
+<div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<div class="relative z-10 max-w-2xl mx-auto space-y-8">
+<h2 class="text-4xl md:text-6xl font-extrabold text-on-primary tracking-tight">Comienza hoy con NutriSmart.</h2>
+<p class="text-lg text-on-primary/70 leading-relaxed">Únete a miles de personas que ya están transformando su vida gracias a la nutrición inteligente.</p>
+<div class="flex justify-center pt-4">
+<button class="bg-white/10 text-white border border-white/20 px-8 py-4 text-lg font-bold rounded-2xl hover:bg-white/20 transition-colors w-full sm:w-auto">Instalar en Android</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-low border-t ghost-border py-20" id="contact">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="space-y-4 text-center md:text-left">
+<div class="flex items-center justify-center md:justify-start gap-2">
+<div class="w-6 h-6 bg-primary rounded flex items-center justify-center">
+<svg class="w-4 h-4 text-tertiary-container" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path></svg>
+</div>
+<span class="font-display text-lg font-extrabold text-primary tracking-tighter">NutriSmart</span>
+</div>
+<p class="text-sm text-secondary max-w-xs">Tu asistente personal de nutrición impulsado por IA.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-sm font-medium text-secondary hover:text-primary transition-colors" href="https://chuckyto111-nutriscan.github.io/nutriscan-app/privacidad_nutrismart.html" target="_blank">Privacidad</a>
+<a class="text-sm font-medium text-secondary hover:text-primary transition-colors" href="#contact">Soporte</a>
+<a class="flex items-center gap-2 text-sm font-medium text-secondary hover:text-primary transition-colors" href="https://wa.me/56959283089" target="_blank">
+<svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14.7 8.38 8.38 0 0 1 3.8.9L22 2l-1.5 5.5Z"></path></svg>
+                            WhatsApp Contacto
+                        </a>
+</div>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-container-lowest ghost-border flex items-center justify-center text-secondary hover:text-primary hover:bg-surface-container-high transition-all" href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+<a class="w-10 h-10 rounded-full bg-surface-container-lowest ghost-border flex items-center justify-center text-secondary hover:text-primary hover:bg-surface-container-high transition-all" href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+<a class="w-10 h-10 rounded-full bg-surface-container-lowest ghost-border flex items-center justify-center text-secondary hover:text-primary hover:bg-surface-container-high transition-all" href="#"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t ghost-border text-center">
+<p class="text-xs text-secondary/60">© 2024 NutriSmart. Todos los derechos reservados. Tu asistente NutriSmart personal.</p>
+</div>
+</div>
+</footer>
+<!-- Floating WhatsApp -->
+<a class="fixed bottom-8 right-8 z-50 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition-colors" href="https://wa.me/56959283089" target="_blank">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14.7 8.38 8.38 0 0 1 3.8.9L22 2l-1.5 5.5Z"></path></svg>
+</a>
+</div>
+</body></html>
