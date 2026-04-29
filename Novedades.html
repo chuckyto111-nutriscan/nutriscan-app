@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffba3f",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1a1c1a",
+                        "on-surface": "#1a1c1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#002115",
+                        "on-surface-variant": "#414944",
+                        "surface-container-high": "#e8e8e5",
+                        "surface-bright": "#f9faf6",
+                        "primary-container": "#0d3d2b",
+                        "tertiary": "#2e1d00",
+                        "secondary-fixed": "#86f8c9",
+                        "on-tertiary-fixed-variant": "#604100",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "surface": "#f9faf6",
+                        "surface-dim": "#d9dad7",
+                        "secondary-container": "#83f5c6",
+                        "inverse-surface": "#2e312f",
+                        "primary": "#002618",
+                        "outline-variant": "#c0c8c2",
+                        "inverse-primary": "#a1d1b8",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#68dbae",
+                        "on-primary-container": "#7aa890",
+                        "surface-variant": "#e2e3df",
+                        "surface-tint": "#3a6753",
+                        "on-primary-fixed": "#002114",
+                        "on-tertiary-fixed": "#281800",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#224f3c",
+                        "surface-container-low": "#f3f4f0",
+                        "surface-container-highest": "#e2e3df",
+                        "outline": "#717973",
+                        "on-tertiary-container": "#d29100",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#493000",
+                        "inverse-on-surface": "#f0f1ee",
+                        "surface-container": "#edeeeb",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#007151",
+                        "primary-fixed": "#bdedd3",
+                        "tertiary-fixed": "#ffdeae",
+                        "secondary": "#006c4e",
+                        "primary-fixed-dim": "#a1d1b8",
+                        "on-error-container": "#93000a",
+                        "background": "#f9faf6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "lg": "40px",
+                        "container-margin": "20px",
+                        "md": "24px",
+                        "gutter": "16px",
+                        "xl": "64px",
+                        "xs": "4px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "h3": ["Manrope"],
+                        "h2": ["Manrope"],
+                        "h1": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "display": ["Manrope"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "h1": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-emerald-50/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-emerald-100/20 dark:border-slate-800 shadow-sm shadow-emerald-900/5 docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-emerald-900 dark:text-emerald-400 hover:bg-emerald-100/50 dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="menu">menu</button>
+<span class="font-['Manrope'] font-extrabold text-xl tracking-tight text-emerald-900 dark:text-emerald-50">NutriSmart</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary-fixed overflow-hidden border-2 border-on-primary">
+<img alt="Profile" data-alt="close-up portrait of a smiling woman in professional attire with soft natural lighting and a blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNtrTAxGQjdHO6h3oT5-dj9sN_8pmIG-RRYgRhPsYgfi5qLwBNHIfaZkNPd4MPuZoT4UEMIk6MMWDMnVvwIkYmrnLP3v5agSGMSqdz6MOM9M3sXl1GeA3an--P3t6JyDSIPCU7cS4f5UwGSbPRpgY4kCbvIJEcrBkvE7C-mBPIZ-PY57atRajmfRcIdbd8-Gm7GaIZwoQTY9xaLg5r5EMAP1ctfAbA08_YEvpPn7Lf0V5t6lwnMFm54YNWowF7xDIkDh8xFV8W"/>
+</div>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-6 pb-32">
+<!-- Hero Section -->
+<section class="py-12 text-center">
+<h1 class="font-display text-display text-primary leading-tight mb-2">Promociones y Novedades</h1>
+<p class="font-h3 text-h3 text-on-primary-container">NutriSmart</p>
+</section>
+<!-- Section 1: Rewards -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-h1 text-h1 text-primary">Gana créditos de tres formas:</h2>
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-4xl" data-icon="stars" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Share Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_4px_20px_rgba(13,61,43,0.08)] border border-outline-variant/30 flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="share">share</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-3">Comparte</h3>
+<p class="font-body-md text-on-surface-variant mb-6 flex-grow">Comparte con 5 amigos, colecciona capturas de sus pantallas de inicio (donde diga "Hola [Nombre]") y envíalas por correo.</p>
+<div class="bg-primary-container text-on-primary-container font-label-md py-2 px-4 rounded-full text-center">
+                        +10 Créditos de Análisis
+                    </div>
+</div>
+<!-- Review Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_4px_20px_rgba(13,61,43,0.08)] border border-outline-variant/30 flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="rate_review">rate_review</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-3">Reseña en Google Play</h3>
+<p class="font-body-md text-on-surface-variant mb-6 flex-grow">Califica nuestra app. 4 estrellas = 4 créditos, 5 estrellas = 8 créditos. Envía tu captura por correo.</p>
+<div class="bg-primary-container text-on-primary-container font-label-md py-2 px-4 rounded-full text-center">
+                        Hasta 8 Créditos
+                    </div>
+</div>
+<!-- Recharge Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_4px_20px_rgba(13,61,43,0.08)] border border-outline-variant/30 flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="receipt_long">receipt_long</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-3">Primera Recarga</h3>
+<p class="font-body-md text-on-surface-variant mb-6 flex-grow">Envía el comprobante de tu primera compra en Google Play para recibir créditos adicionales.</p>
+<div class="bg-primary-container text-on-primary-container font-label-md py-2 px-4 rounded-full text-center">
+                        +15 Créditos Extra
+                    </div>
+</div>
+</div>
+</section>
+<!-- Illustration Break -->
+<section class="mb-16 bg-secondary-fixed/20 rounded-[40px] p-8 flex flex-col md:flex-row items-center justify-center gap-8 overflow-hidden">
+<div class="max-w-md text-center md:text-left">
+<h4 class="font-h2 text-h2 text-primary mb-4">¡Tu opinión nos ayuda a crecer!</h4>
+<p class="font-body-lg text-on-surface-variant">Únete a nuestra comunidad y obtén beneficios exclusivos mientras mejoras tu salud.</p>
+</div>
+<div class="w-64 h-64 relative">
+<img alt="People using phones" class="rounded-full object-cover w-full h-full border-8 border-white shadow-xl" data-alt="a diverse group of young adults smiling and looking at their smartphones together in a bright modern co-working space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAINuTo6icQ13CROy9tXJkgY9J3u5U0GetcpYD7GcrA5vkccP8qO7fU_yh_ZfjtjlLbVYO47tpXC0QDsmzNFpXyh-BCzJ8oy4ewkSM_WRUPI4Hnv-HVcDIbHOSAtdaTpHTk8iu0dkOjo9x2i5rYCwd3I4IOwpn6aJjocCxaqAADiVrsjV4wgG59hPH4oC5hjofE_s7EGEmbDTPDMe7l02AF-GbLoZYbBjFXn2aTCPo8z6npOc2VqT1CI9NPMNW-gLxO2RIRSe16"/>
+</div>
+</section>
+<!-- Section 2: What's New -->
+<section class="mb-16">
+<div class="bg-primary text-on-primary rounded-[32px] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
+<div class="p-8 lg:p-12 flex-1">
+<span class="inline-block bg-secondary-fixed text-on-secondary-fixed font-label-md px-4 py-1 rounded-full mb-6">LO NUEVO</span>
+<h2 class="font-h1 text-h1 mb-4">Lo Nuevo NutriSmart</h2>
+<p class="font-body-lg mb-8 text-on-primary-container">Pronto sacaremos una nueva version con mas caracteristicas para optimizar tu bienestar diario.</p>
+<ul class="space-y-4 mb-8">
+<li class="flex items-center gap-4">
+<span class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold">1</span>
+<span class="font-h3 text-h3">Historial mensual detallado</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold">2</span>
+<span class="font-h3 text-h3">Guía de ejercicios para quemar calorías</span>
+</li>
+<li class="flex items-center gap-4">
+<span class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold">3</span>
+<span class="font-h3 text-h3">Seguimiento inteligente de hidratación</span>
+</li>
+</ul>
+</div>
+<div class="lg:w-1/2 min-h-[300px] relative">
+<img alt="Health feature" class="absolute inset-0 w-full h-full object-cover" data-alt="overhead view of a vibrant healthy poke bowl with salmon, avocado and greens next to a smartphone showing a nutrition app" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNATVvvga7_zkF2cbpjyFsU1uSLvdNahHVEWPTP_DTxEeBrjes4oC-wQ-eb-bbFbue8xGe3fJdIjRbjoEHTycddAk-2PGEk34GqpSelRYtJ2Is0RoLldQ_f8rx8Ttqk3assGR7UVVp8EWXA6PUAkop7EzQl2kcEo9UQJhWuSfW2fWRsNElIml0qKKUO_K72VHDtudXg0w3sfGUzpS_ebQLFKrDx8ZzV_c3-GNBkd28-gExv-ntuszde4KsVOz_D_qmvhUn_egQ"/>
+</div>
+</div>
+</section>
+<!-- Section 3: Goal -->
+<section class="mb-16 max-w-3xl mx-auto text-center">
+<h2 class="font-h1 text-h1 text-primary mb-6">Objetivo NutriSmart</h2>
+<div class="bg-white rounded-[24px] p-8 shadow-[0_4px_20px_rgba(13,61,43,0.06)] border border-emerald-50">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                    Nuestro compromiso es democratizar el acceso a una nutrición inteligente. Queremos que cada usuario tenga el poder de transformar su salud a través de datos precisos, guías personalizadas y una comunidad de apoyo que premia el progreso constante. NutriSmart no es solo una app, es tu compañero científico en el camino hacia una vida más plena y vital.
+                </p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-emerald-50 dark:border-slate-800 shadow-[0_-4px_20px_rgba(13,61,43,0.06)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-6">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-900 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl px-4 py-1 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="local_offer" style="font-variation-settings: 'FILL' 1;">local_offer</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Offers</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Log</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Manrope'] text-[11px] font-medium">Profile</span>
+</a>
+</nav>
+</body></html>
