@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chuckyto111-nutriscan.github.io/NutriSmart-app/sitemap.xml
